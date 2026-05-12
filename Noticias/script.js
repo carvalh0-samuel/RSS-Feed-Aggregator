@@ -11,8 +11,9 @@ const feeds = [
 const container = document.getElementById('news-container');
 
 async function carregarNoticias() {
-    for (const feed of feeds) {
-        
+    let todasAsNoticias = [];
+
+    const promessas = feeds.map(async (feed) => {
         const rss2jsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
         
         try {
@@ -20,14 +21,28 @@ async function carregarNoticias() {
             const dados = await resposta.json();
 
             if (dados.status === 'ok') {
-                // Pega as 4 notícias mais recentes de cada portal para não lotar a tela
-                const noticias = dados.items.slice(0, 4);
-                noticias.forEach(noticia => criarCardNoticia(noticia, feed.nome));
+                const noticias = dados.items.slice(0, 6);
+                noticias.forEach(noticia => {
+                    noticia.nomeDoJornal = feed.nome; 
+                    todasAsNoticias.push(noticia);
+                });
             }
         } catch (erro) {
             console.error(`Erro ao carregar o feed do portal ${feed.nome}:`, erro);
         }
-    }
+    });
+
+    await Promise.all(promessas);
+
+    todasAsNoticias.sort((a, b) => {
+        
+        const tempoA = a.pubDate ? new Date(a.pubDate.replace(' ', 'T') + 'Z').getTime() : 0;
+        const tempoB = b.pubDate ? new Date(b.pubDate.replace(' ', 'T') + 'Z').getTime() : 0;
+        
+        return (isNaN(tempoB) ? 0 : tempoB) - (isNaN(tempoA) ? 0 : tempoA);
+    });
+
+    todasAsNoticias.forEach(noticia => criarCardNoticia(noticia, noticia.nomeDoJornal));
 }
 
 function extrairImagem(noticia) {
