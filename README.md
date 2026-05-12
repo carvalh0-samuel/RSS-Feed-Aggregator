@@ -18,8 +18,4 @@ Um agregador de notícias simples, dinâmico e responsivo desenvolvido inteirame
 
 ## ⚙️ Como executar o projeto
 
-Como o projeto é construído 100% no lado do cliente (Front-end) e não exige um servidor ou banco de dados local, a execução é direta:
-
-1. Faça o clone deste repositório:
-   ```bash
-   git clone [https://github.com/SEU-USUARIO/nome-do-repositorio.git](https://github.com/SEU-USUARIO/nome-do-repositorio.git)
+Como o projeto é construído 100% no lado do cliente (Front-end) e não exige um servidor ou banco de dados local, a execução é direta.
