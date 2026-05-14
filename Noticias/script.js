@@ -1,10 +1,13 @@
 const feeds = [
     { nome: 'G1', url: 'https://g1.globo.com/rss/g1/' },
-    { nome: 'Folha de S.Paulo', url: 'https://feeds.folha.uol.com.br/emcimadahora/rss091.xml' },
     { nome: 'CNN Brasil', url: 'https://www.cnnbrasil.com.br/feed/'},
     { nome: 'Metrópoles', url: 'https://www.metropoles.com/feed' },
     { nome: 'Jovem Pan', url: 'https://jovempan.com.br/feed/' },
-    { nome: 'Conexão Política', url: 'https://conexaopolitica.com.br/feed/' }
+    { nome: 'Conexão Política', url: 'https://conexaopolitica.com.br/feed/' },
+    { nome: 'InfoMoney', url: 'https://www.infomoney.com.br/feed/' },
+    { nome: 'G1 DF', url: 'https://g1.globo.com/rss/g1/df/distrito-federal/' },
+    { nome: 'Canaltech', url: 'https://canaltech.com.br/rss/' },
+    { nome: 'Gizmodo', url: 'https://gizmodo.uol.com.br/feed/' }
 ];
 const container = document.getElementById('news-container');
 async function carregarNoticias() {
@@ -15,7 +18,7 @@ async function carregarNoticias() {
             const resposta = await fetch(rss2jsonUrl);
             const dados = await resposta.json();
             if (dados.status === 'ok') {
-                const noticias = dados.items.slice(0, 6);
+                const noticias = dados.items.slice(0, 3);
                 noticias.forEach(noticia => {
                     noticia.nomeDoJornal = feed.nome; 
                     todasAsNoticias.push(noticia);
